@@ -1,4 +1,4 @@
-package com.alexandre.taskmanager.model;
+package com.alexandre.taskmanager.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,46 +1,55 @@
+
 # Copilot Instructions for Task Incident Manager API
 
-## Project Overview
-- **Framework:** Spring Boot (Java 17)
-- **Purpose:** RESTful API for task and incident management
-- **Structure:**
-  - `model/` — JPA entities (e.g., `User`)
-  - `controller/`, `service/`, `repository/`, `dto/` — follow standard Spring layering, but may be empty or incomplete
-  - `resources/application.yml` — Spring Boot config (default port 8080)
+## Project Architecture & Structure
+- **Framework:** Spring Boot (Java 17), layered architecture
+- **Purpose:** RESTful API for managing tasks and incidents
+- **Key Layers:**
+  - `entity/` — JPA entities (e.g., `User`, `Task`, `TaskStatus`), use Lombok for boilerplate
+  - `repository/` — Spring Data JPA interfaces (e.g., `UserRepository`, `TaskRepository`)
+  - `service/` — Business logic (e.g., `UserService`, `TaskService`)
+  - `controller/` — REST API endpoints (currently empty, add new endpoints here)
+  - `dto/` — For data transfer objects (currently empty, add DTOs here)
+- **Configuration:** `resources/application.yml` (default port 8080, DB config)
+- **Entry Point:** `TaskIncidentManagerApplication.java`
 
-## Build & Run
-- **Build:** `./mvnw clean package` (uses Maven Wrapper)
-- **Run:** `./mvnw spring-boot:run` or run `TaskIncidentManagerApplication` main class
-- **Test:** `./mvnw test`
-- **Dependencies:**
-  - Spring Boot (Web, Data JPA, Validation)
-  - PostgreSQL (runtime)
-  - Lombok (annotation processing)
+## Developer Workflows
+- **Build:** `./mvnw clean package` (always use Maven Wrapper)
+- **Run:** `./mvnw spring-boot:run` or run main class
+- **Test:** `./mvnw test` (see `TaskIncidentManagerApplicationTests`)
+- **Debug:** Standard Spring Boot debug via IDE or `mvnw` (no custom debug scripts)
+- **Dependencies:** Managed in `pom.xml` (Spring Boot, Data JPA, Validation, Lombok, PostgreSQL)
 
-## Patterns & Conventions
-- **Entities:** Annotated with `@Entity`, use Lombok for getters/setters
-- **Database:** Table names are plural (e.g., `users` for `User` entity)
-- **No custom controllers/services yet:** Folders exist for future expansion
-- **Configuration:** Minimal, see `application.yml`
-- **Testing:** Uses Spring Boot test starter, see `TaskIncidentManagerApplicationTests`
+## Project-Specific Conventions
+- **Entities:** Annotated with `@Entity`, use plural table names (e.g., `users` for `User`)
+- **Lombok:** Used for getters/setters in all entities; annotation processing enabled in Maven
+- **Layering:**
+  - Place business logic in `service/`
+  - Place data access in `repository/`
+  - Place REST endpoints in `controller/`
+  - Use DTOs for API payloads (add to `dto/`)
+- **Configuration:** All config in `application.yml`; DB expects PostgreSQL
+- **Testing:** Use Spring Boot test starter; see `TaskIncidentManagerApplicationTests`
 
 ## Integration & Extensibility
-- **Database:** Expects PostgreSQL, configure connection in `application.yml` if needed
-- **Spring Boot plugins:** See `pom.xml` for build/test plugins
-- **Lombok:** Annotation processing enabled via Maven config
+- **Database:** PostgreSQL; configure connection in `application.yml`
+- **Spring Boot Plugins:** See `pom.xml` for build/test plugins
+- **Static/Template Resources:** Place in `resources/static/` or `resources/templates/` as needed
 
-## Key Files
+## Examples & Patterns
+- **Entity Example:** See `entity/User.java` for JPA + Lombok pattern
+- **Repository Example:** See `repository/UserRepository.java` for Spring Data JPA interface
+- **Service Example:** See `service/UserService.java` for business logic structure
+- **Test Example:** See `TaskIncidentManagerApplicationTests.java` for Spring Boot test setup
+
+## Key Files & Directories
 - `pom.xml` — dependencies, plugins, Java version
-- `TaskIncidentManagerApplication.java` — main entry point
-- `model/User.java` — example entity
+- `src/main/java/com/alexandre/taskmanager/entity/` — JPA entities
+- `src/main/java/com/alexandre/taskmanager/repository/` — Data access
+- `src/main/java/com/alexandre/taskmanager/service/` — Business logic
+- `src/main/java/com/alexandre/taskmanager/controller/` — REST endpoints
+- `src/main/resources/application.yml` — configuration
 - `HELP.md` — links to Spring/Maven docs
-
-## AI Agent Guidance
-- Follow Spring Boot idioms for new features (REST controllers, services, repositories)
-- Place new business logic in `service/`, API endpoints in `controller/`, data access in `repository/`
-- Use Lombok for boilerplate in models
-- Keep configuration in `application.yml`
-- Use Maven Wrapper for all build/test commands
 
 ---
 For more details, see Spring Boot and Maven documentation linked in `HELP.md`.

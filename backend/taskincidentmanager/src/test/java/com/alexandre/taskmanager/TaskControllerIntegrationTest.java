@@ -40,14 +40,15 @@ class TaskControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/tasks/{userId} - should create task and return 200 with details")
+    @DisplayName("POST /api/tasks - should create task and return 200 with details")
     void createTask_shouldReturn200AndTaskDetails() throws Exception {
         String json = "{" +
                 "\"title\": \"Test Task\"," +
                 "\"description\": \"desc\"," +
-                "\"priority\": \"HIGH\"}";
+                "\"priority\": \"HIGH\"," +
+                "\"userId\": " + testUser.getId() + "}";
 
-        MvcResult result = mockMvc.perform(post("/api/tasks/" + testUser.getId())
+        MvcResult result = mockMvc.perform(post("/api/tasks")
                         .contentType("application/json")
                         .content(json))
                 .andExpect(status().isOk())
@@ -66,5 +67,7 @@ class TaskControllerIntegrationTest {
         assertThat(response).contains("\"priority\":\"HIGH\"");
         assertThat(response).contains("\"status\":\"OPEN\"");
         assertThat(response).contains("\"createdAt\"");
+        assertThat(response).contains("\"userId\":" + testUser.getId());
+        assertThat(response).contains("\"userName\":\"Test User\"");
     }
 }

@@ -1,7 +1,10 @@
 package com.alexandre.taskmanager.controller;
 
+import com.alexandre.taskmanager.dto.CreateUserRequest;
+import com.alexandre.taskmanager.dto.UserResponse;
 import com.alexandre.taskmanager.entity.User;
 import com.alexandre.taskmanager.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +21,33 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody @org.springframework.lang.NonNull User user) {
-        User created = userService.create(user);
-        return ResponseEntity.ok(created);
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+
+        User saved = userService.create(user);
+
+        return ResponseEntity.ok(
+                new UserResponse(saved.getId(), saved.getName(), saved.getEmail())
+        );
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        return ResponseEntity.ok(
+                userService.findAll()
+                        .stream()
+                        .map(u -> new UserResponse(u.getId(), u.getName(), u.getEmail()))
+                        .toList()
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable @org.springframework.lang.NonNull Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+    public ResponseEntity<UserResponse> getUserById(@PathVariable long id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok(
+                new UserResponse(user.getId(), user.getName(), user.getEmail())
+        );
     }
 }

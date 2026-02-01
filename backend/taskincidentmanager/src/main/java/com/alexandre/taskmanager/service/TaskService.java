@@ -7,6 +7,7 @@ import com.alexandre.taskmanager.repository.TaskRepository;
 import com.alexandre.taskmanager.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,6 +27,7 @@ public class TaskService {
 
         task.setUser(user);
         task.setStatus(TaskStatus.OPEN);
+        task.setCreatedAt(LocalDateTime.now());
 
         return taskRepository.save(task);
     }

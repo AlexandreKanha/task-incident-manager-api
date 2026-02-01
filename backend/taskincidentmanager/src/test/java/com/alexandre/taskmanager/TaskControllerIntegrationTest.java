@@ -40,7 +40,7 @@ class TaskControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/tasks - should create task and return 200 with details")
+    @DisplayName("POST /api/tasks - should create task and return 201 with details")
     void createTask_shouldReturn200AndTaskDetails() throws Exception {
         String json = "{" +
                 "\"title\": \"Test Task\"," +
@@ -51,7 +51,7 @@ class TaskControllerIntegrationTest {
         MvcResult result = mockMvc.perform(post("/api/tasks")
                         .contentType("application/json")
                         .content(json))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
@@ -59,8 +59,8 @@ class TaskControllerIntegrationTest {
         assertThat(response).contains("HIGH");
         assertThat(response).contains("OPEN");
         assertThat(result.getResponse().getStatus())
-                .withFailMessage("Expected 200 OK but got %s. Response: %s", result.getResponse().getStatus(), response)
-                .isEqualTo(200);
+                .withFailMessage("Expected 201 Created but got %s. Response: %s", result.getResponse().getStatus(), response)
+                .isEqualTo(201);
         
         // Verify the task was saved with all required fields
         assertThat(response).contains("\"title\":\"Test Task\"");

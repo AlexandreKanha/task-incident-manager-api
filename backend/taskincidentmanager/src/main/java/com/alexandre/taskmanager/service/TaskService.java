@@ -3,6 +3,7 @@ package com.alexandre.taskmanager.service;
 import com.alexandre.taskmanager.entity.Task;
 import com.alexandre.taskmanager.entity.TaskStatus;
 import com.alexandre.taskmanager.entity.User;
+import com.alexandre.taskmanager.exception.ResourceNotFoundException;
 import com.alexandre.taskmanager.repository.TaskRepository;
 import com.alexandre.taskmanager.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class TaskService {
 
     public Task create(Task task, @org.springframework.lang.NonNull Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         task.setUser(user);
         task.setStatus(TaskStatus.OPEN);

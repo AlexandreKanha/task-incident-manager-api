@@ -120,6 +120,11 @@ async function createTask() {
         return;
     }
 
+    if (!priority) {
+        showNotification('Please select a priority', 'error');
+        return;
+    }
+
     if (!userId || userId < 1) {
         showNotification('Please enter a valid User ID', 'error');
         return;
@@ -146,7 +151,7 @@ async function createTask() {
         // Limpar formulário
         document.getElementById("title").value = "";
         document.getElementById("description").value = "";
-        document.getElementById("priority").value = "MEDIUM";
+        document.getElementById("priority").value = "";
         document.getElementById("userId").value = "";
 
         showNotification('Task created successfully!', 'success');

@@ -5,6 +5,8 @@ import com.alexandre.taskmanager.dto.TaskResponse;
 import com.alexandre.taskmanager.entity.Task;
 import com.alexandre.taskmanager.entity.TaskStatus;
 import com.alexandre.taskmanager.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Tasks", description = "Task management endpoints")
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -22,6 +25,7 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Operation(summary = "Create a new task")
     @PostMapping
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody CreateTaskRequest request) {
         Task task = new Task();
@@ -34,6 +38,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(saved));
     }
 
+    @Operation(summary = "List all tasks")
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return ResponseEntity.ok(
@@ -44,6 +49,7 @@ public class TaskController {
         );
     }
 
+    @Operation(summary = "List tasks by status")
     @GetMapping("/status/{status}")
     public ResponseEntity<List<TaskResponse>> getTasksByStatus(@PathVariable TaskStatus status) {
         return ResponseEntity.ok(
@@ -54,6 +60,7 @@ public class TaskController {
         );
     }
 
+    @Operation(summary = "List tasks by user")
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TaskResponse>> getTasksByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(

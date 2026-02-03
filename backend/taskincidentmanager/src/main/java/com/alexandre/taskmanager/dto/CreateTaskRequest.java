@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 @Getter
 @Setter
@@ -22,5 +23,6 @@ public class CreateTaskRequest {
     private String priority;
 
     @NotNull(message = "User ID is required")
+    @NonNull
     private Long userId;
 }

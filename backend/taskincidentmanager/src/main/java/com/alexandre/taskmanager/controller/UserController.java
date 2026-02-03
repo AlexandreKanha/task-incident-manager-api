@@ -56,4 +56,11 @@ public class UserController {
                 new UserResponse(user.getId(), user.getName(), user.getEmail())
         );
     }
+
+    @Operation(summary = "Delete a user")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable @org.springframework.lang.NonNull Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

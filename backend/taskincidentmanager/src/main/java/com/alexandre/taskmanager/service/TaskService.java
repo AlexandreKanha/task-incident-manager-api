@@ -44,4 +44,11 @@ public class TaskService {
     public List<Task> findByUser(Long userId) {
         return taskRepository.findByUserId(userId);
     }
+
+    public void delete(@org.springframework.lang.NonNull Long id) {
+        if (!taskRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Task not found");
+        }
+        taskRepository.deleteById(id);
+    }
 }

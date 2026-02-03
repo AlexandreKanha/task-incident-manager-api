@@ -71,6 +71,13 @@ public class TaskController {
         );
     }
 
+    @Operation(summary = "Delete a task")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable @org.springframework.lang.NonNull Long id) {
+        taskService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private TaskResponse toResponse(Task task) {
         return new TaskResponse(
                 task.getId(),

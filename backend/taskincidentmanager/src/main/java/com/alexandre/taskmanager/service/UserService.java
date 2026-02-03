@@ -2,6 +2,7 @@ package com.alexandre.taskmanager.service;
 
 import com.alexandre.taskmanager.entity.User;
 import com.alexandre.taskmanager.repository.UserRepository;
+import com.alexandre.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import com.alexandre.taskmanager.exception.ResourceNotFoundException;
 
@@ -12,9 +13,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, TaskRepository taskRepository) {
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
     }
 
     public User create(@org.springframework.lang.NonNull User user) {
@@ -31,5 +34,18 @@ public class UserService {
     }
     return userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    public void delete(@org.springframework.lang.NonNull Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        // Deletar todas as tasks associadas ao usuário primeiro
+        var tasks = taskRepository.findByUserId(id);
+        if (tasks != null && !tasks.isEmpty()) {
+            taskRepository.deleteAll(tasks);
+        }
+        // Agora deletar o usuário
+        userRepository.deleteById(id);
     }
 }

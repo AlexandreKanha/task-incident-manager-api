@@ -1,4 +1,47 @@
+
 const API_URL = "http://localhost:8080/api/tasks";
+const USER_API_URL = "http://localhost:8080/api/users";
+// Função para criar usuário
+async function createUser() {
+    const name = document.getElementById("userName").value.trim();
+    const email = document.getElementById("userEmail").value.trim();
+
+    if (!name) {
+        showNotification('Please enter a user name', 'error');
+        return;
+    }
+    if (!email || !validateEmail(email)) {
+        showNotification('Please enter a valid email', 'error');
+        return;
+    }
+
+    const user = { name, email };
+
+    try {
+        const response = await fetch(USER_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
+        });
+        if (!response.ok) {
+            throw new Error('Failed to create user');
+        }
+
+        const createdUser = await response.json();
+
+        document.getElementById("userName").value = "";
+        document.getElementById("userEmail").value = "";
+        showNotification(`User created successfully! ID: ${createdUser.id}`, 'success');
+    } catch (error) {
+        console.error('Error creating user:', error);
+        showNotification('Error creating user', 'error');
+    }
+}
+
+// Função simples para validar email
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 // Ordem de prioridade para ordenação
 const PRIORITY_ORDER = {

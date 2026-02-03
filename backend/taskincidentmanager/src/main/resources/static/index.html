@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Incident Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📋 Task Incident Manager</h1>
+        <p class="subtitle">Organize and manage your tasks efficiently</p>
+    </header>
+
+    <div class="card">
+        <h2>✨ Create New Task</h2>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input id="title" type="text" placeholder="Enter task title">
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Enter task description" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select id="priority">
+                    <option value="HIGH">🔴 High</option>
+                    <option value="MEDIUM" selected>🟡 Medium</option>
+                    <option value="LOW">🟢 Low</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="userId">User ID</label>
+                <input id="userId" type="number" placeholder="User ID" min="1">
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="createTask()">+ Create Task</button>
+    </div>
+
+    <div class="card">
+        <div class="tasks-header">
+            <h2>📝 Tasks</h2>
+            <span class="task-count" id="taskCount">0 tasks</span>
+        </div>
+        
+        <div id="taskList" class="task-list"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

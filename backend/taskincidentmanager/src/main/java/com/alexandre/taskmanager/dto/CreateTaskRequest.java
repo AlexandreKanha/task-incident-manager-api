@@ -1,5 +1,6 @@
 package com.alexandre.taskmanager.dto;
 
+import com.alexandre.taskmanager.entity.TaskPriority;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,8 @@ public class CreateTaskRequest {
 
     private String description;
 
-    @NotBlank(message = "Priority is required")
-    private String priority;
+    @NotNull
+    private TaskPriority priority;
 
     @NotNull(message = "User ID is required")
     @NonNull

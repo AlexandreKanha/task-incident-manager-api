@@ -26,8 +26,8 @@ public class Task {
     @Column(nullable = false)
     private TaskStatus status;
 
-    @Column(nullable = false)
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

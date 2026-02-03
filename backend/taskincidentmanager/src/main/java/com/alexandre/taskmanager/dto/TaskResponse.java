@@ -1,5 +1,6 @@
 package com.alexandre.taskmanager.dto;
 
+import com.alexandre.taskmanager.entity.TaskPriority;
 import com.alexandre.taskmanager.entity.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class TaskResponse {
     private String title;
     private String description;
     private TaskStatus status;
-    private String priority;
+    private TaskPriority priority;
     private LocalDateTime createdAt;
     private Long userId;
     private String userName;

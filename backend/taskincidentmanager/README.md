@@ -29,6 +29,7 @@
     - [Features](#features)
   - [▶️ How to Run](#️-how-to-run)
     - [Prerequisites](#prerequisites)
+    - [Configuration](#configuration)
     - [Steps](#steps)
   - [🧪 Testing](#-testing)
     - [Test Coverage](#test-coverage)
@@ -178,7 +179,24 @@ After running the application, access:
 
 - ☕ Java 17+
 - 📦 Maven
-- 🐬 MySQL (configure em `src/main/resources/application.properties`)
+- 🐬 MySQL (running and configured)
+
+### Configuration
+
+1. **Database Setup**
+   - Ensure MySQL is running locally
+   - Create a database: `CREATE DATABASE task_incident_manager;`
+   - Create a user: `CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'your_password';`
+   - Grant privileges: `GRANT ALL PRIVILEGES ON task_incident_manager.* TO 'app_user'@'localhost';`
+
+2. **Configure Application Properties**
+   - Copy `src/main/resources/application.properties.example` to `src/main/resources/application.properties`
+   - Update the credentials in `application.properties`:
+     ```properties
+     spring.datasource.username=app_user
+     spring.datasource.password=your_password
+     ```
+   - **Important**: Never commit `application.properties` to Git (it's in `.gitignore` for security)
 
 ### Steps
 
@@ -188,6 +206,9 @@ git clone https://github.com/AlexandreKanha/task-incident-manager-api
 
 # Navigate to project directory
 cd task-incident-manager-api/backend/taskincidentmanager
+
+# Build the project
+./mvnw clean install
 
 # Run the application
 ./mvnw spring-boot:run

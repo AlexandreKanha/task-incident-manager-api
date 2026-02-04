@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,19 +33,41 @@ public class GlobalExceptionHandler {
         }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("status", 400);
+        response.put("status", HttpStatus.BAD_REQUEST.value());
         response.put("error", "VALIDATION_ERROR");
+        response.put("message", "Validation failed for one or more fields");
         response.put("fields", fieldErrors);
+        response.put("timestamp", LocalDateTime.now());
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgument(IllegalArgumentException ex) {
+        ApiError error = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                "INVALID_ARGUMENT",
+                ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ApiError> handleNullPointer(NullPointerException ex) {
+        ApiError error = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "INTERNAL_SERVER_ERROR",
+                "A required value is null. Please contact support."
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {
         ApiError error = new ApiError(
-                500,
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "INTERNAL_SERVER_ERROR",
-                "Unexpected error"
+                "An unexpected error occurred. Please try again later."
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }

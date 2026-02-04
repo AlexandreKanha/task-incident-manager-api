@@ -11,17 +11,31 @@
 
 ## 📋 Table of Contents
 
-- [Overview](#-overview)
-- [Technologies](#-technologies--stack)
-- [Architecture](#-architecture)
-- [API Endpoints](#-api-endpoints)
-- [Error Handling](#-validation--error-handling)
-- [API Documentation](#-api-documentation)
-- [How to Run](#-how-to-run)
-- [Testing](#-testing)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
-- [License](#-license)
+- [🛠️ Task Incident Manager API](#️-task-incident-manager-api)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [🚀 Overview](#-overview)
+    - [Main Goals](#main-goals)
+  - [🛠️ Technologies \& Stack](#️-technologies--stack)
+  - [📁 Architecture](#-architecture)
+    - [Responsibilities](#responsibilities)
+    - [Benefits](#benefits)
+  - [🔗 API Endpoints](#-api-endpoints)
+    - [Task Endpoints](#task-endpoints)
+    - [User Endpoints](#user-endpoints)
+    - [Health Check](#health-check)
+  - [⚠️ Validation \& Error Handling](#️-validation--error-handling)
+    - [Error Response Example](#error-response-example)
+  - [📚 API Documentation](#-api-documentation)
+    - [Features](#features)
+  - [▶️ How to Run](#️-how-to-run)
+    - [Prerequisites](#prerequisites)
+    - [Steps](#steps)
+  - [🧪 Testing](#-testing)
+    - [Test Coverage](#test-coverage)
+    - [Run Tests](#run-tests)
+  - [🔮 Future Improvements](#-future-improvements)
+  - [👨‍💻 Author](#-author)
+  - [📄 License](#-license)
 
 ---
 
@@ -115,6 +129,8 @@ The project follows a **layered architecture**:
 
 - `GET /api/health` — Application health status
 
+This endpoint returns the application status.
+
 ---
 
 ## ⚠️ Validation & Error Handling
@@ -168,7 +184,7 @@ After running the application, access:
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/AlexandreKanha/task-incident-manager-api
 
 # Navigate to project directory
 cd task-incident-manager-api/backend/taskincidentmanager
